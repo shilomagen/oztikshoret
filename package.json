@@ -15,6 +15,7 @@
     "react-scripts": "1.0.14"
   },
   "scripts": {
+    "serve:dist": "yarn build && node server/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
