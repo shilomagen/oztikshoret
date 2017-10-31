@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Alef" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>OzTikshoret</title>
+    <style>
+      @font-face {
+        font-family: 'Alef';
+        src: url(${font})  format('truetype'); /* Safari, Android, iOS */
+      }
+      body {
+        height: 2339px;
+        width: 1654px;
+        background-image: url(${image});
+        position: relative;
+        font-family: 'Alef', sans-serif;
+        direction: rtl;
+        font-size:30px;
+      }
+      .offer-date {
+        position: absolute;
+        top: 493px;
+        left: 293px;
+      }
+
+      .offer-for {
+        position: absolute;
+        top: 565px;
+        right: 501px;
+      }
+
+      .offer-subject {
+        position: absolute;
+        top: 663px;
+        right: 492px;
+      }
+
+      .offer-body {
+        position: absolute;
+        width: 1333px;
+        top: 735px;
+        right: 184px;
+        line-height: 81px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="offer-date">
+      ${offer-date}
+    </div>
+    <div class="offer-for">
+    ${offer-for}
+    </div>
+    <div class="offer-subject">
+    ${offer-subject}
+    </div>
+    <div class="offer-body">
+      ${offer-body}
+    </div>
+  </body>
+</html>

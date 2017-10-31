@@ -1,0 +1,34 @@
+body {
+    height: 2339px;
+    width: 1654px;
+    background-image: url(ozTikshoretTemplate.jpg);
+    position: relative;
+    font-family: 'Alef', sans-serif;
+    direction: rtl;
+    font-size:30px;
+}
+.offer-date {
+    position: absolute;
+    top: 493px;
+    left: 293px;
+}
+
+.offer-for {
+    position: absolute;
+    top: 565px;
+    right: 501px;
+}
+
+.offer-subject {
+    position: absolute;
+    top: 663px;
+    right: 492px;
+}
+
+.offer-body {
+    position: absolute;
+    width: 1333px;
+    top: 735px;
+    right: 184px;
+    line-height: 81px;
+}
