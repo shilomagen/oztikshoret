@@ -5,17 +5,23 @@ const path = require('path');
 require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 const app = express();
+const MailService = require('./services/mail/mailService');
+const fs = require('fs');
+
+
+const mailService = new MailService();
 
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.post('/api/create-offer', async (req, res) => {
   try {
-    const pdfFile = await pdfService.createPdf(req.body);
-    res.end();
+    res.status(200).end();
+    const {filename} = await pdfService.createPdf(req.body);
+    await mailService.sendMail(req.body.email, filename);
+    await fs.unlink(filename);
   } catch (e) {
     console.error(e);
-    res.status(500).end();
   }
 });
 app.get('/', (req, res) => {
