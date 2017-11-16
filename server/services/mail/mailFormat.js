@@ -22,7 +22,7 @@ const mailFormat = `<mjml>
         <mj-column>
           <mj-divider border-color="#bf0a30"></mj-divider>
           <mj-text font-size="14px" color="#000000" font-family="Alef,helvetica">עוז תקשורת בע״מ</mj-text>
-           <mj-text font-size="14px" color="#000000" font-family="Alef,helvetica">בקרו באתר החדש שלנו - https://www.oz.tikshoret.com</mj-text>
+           <mj-text font-size="14px" color="#000000" font-family="Alef,helvetica">בקרוב, האתר החדש שלנו - https://www.oztikshoret.com</mj-text>
         </mj-column>
       </mj-section>
     </mj-container>
