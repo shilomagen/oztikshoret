@@ -18,7 +18,7 @@
     "react-scripts": "1.0.14"
   },
   "engines": {
-    "node": "8.5.1"
+    "node": "8.7.0"
   },
   "scripts": {
     "start": "node -v && yarn build && node server/server.js",
