@@ -1,11 +1,23 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { CustomInput, CustomTextArea } from "./CustomInput/CustomInput";
-import { AppStatus } from "../../common/AppStatus";
+import { AppStatus, SocketEvents } from "../../common/constants";
+import io from "socket.io-client";
+
+const StatusStrings = {
+  [AppStatus.DONE]: "כל השלבים עברו בהצלחה, נשלח ללקוח!",
+  [AppStatus.CLEANING]: "מנקים קבצים זמניים...",
+  [AppStatus.SENDING_MAIL]: "שולחים את המייל...",
+  [AppStatus.CREATING_PDF]: "יוצרים את הצעת המחיר...",
+  [AppStatus.PDF_CREATED]: "הצעת המחיר נוצרה בהצלחה!",
+  [AppStatus.SENT]: "נשלח!",
+  [AppStatus.ERROR]: "קרתה תקלה, דבר עם הבן שלך"
+};
 
 export default class Form extends Component {
   constructor(props) {
     super(props);
+    this.socket = io("http://localhost:8080");
     this.state = {
       to: "",
       subject: "",
@@ -13,8 +25,14 @@ export default class Form extends Component {
       email: "",
       status: AppStatus.INIT
     };
+    this.socket.on(SocketEvents.STATUS_CHANGE, ({ status }) =>
+      this.setAppState(status)
+    );
   }
 
+  setAppState = status => {
+    return this.setState({ status });
+  };
   handleFormChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value });
   };
@@ -39,14 +57,28 @@ export default class Form extends Component {
       this.setState({ status: AppStatus.ERROR });
     }
   }
+  getStatusContainer() {
+    const { status } = this.state;
+    return (
+      <div
+        className={
+          "alert" + status === AppStatus.ERROR
+            ? "alert-danger"
+            : "alert-primary"
+        }
+        role="alert"
+      >
+        <span>{StatusStrings[status]}</span>
+      </div>
+    );
+  }
 
   resetForm() {
     this.setState({
       to: "",
       subject: "",
       body: "",
-      email: "",
-      status: AppStatus.SENT
+      email: ""
     });
   }
 
@@ -92,18 +124,7 @@ export default class Form extends Component {
             שגר הצעת מחיר
           </button>
         </form>
-        <div className="mt-3">
-          {this.state.status === AppStatus.SENT && (
-            <div className="alert alert-primary" role="alert">
-              הבקשה שוגרה והיא בדרך ללקוח
-            </div>
-          )}
-          {this.state.status === AppStatus.ERROR && (
-            <div className="alert alert-danger" role="alert">
-              קרתה תקלה, דבר עם הבן שלך
-            </div>
-          )}
-        </div>
+        <div className="mt-3 status">{this.getStatusContainer()}</div>
       </div>
     );
   }
