@@ -19,7 +19,7 @@ const StatusStrings = {
 export default class Form extends Component {
   constructor(props) {
     super(props);
-    this.socket = io("http://localhost:8080");
+    this.socket = io("http://localhost");
     this.state = {
       to: "",
       subject: "",
