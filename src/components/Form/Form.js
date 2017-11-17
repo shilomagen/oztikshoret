@@ -3,6 +3,8 @@ import axios from "axios";
 import { CustomInput, CustomTextArea } from "./CustomInput/CustomInput";
 import { AppStatus, SocketEvents } from "../../common/constants";
 import io from "socket.io-client";
+import ReactLoading from "react-loading";
+import App from "../../App";
 
 const StatusStrings = {
   [AppStatus.DONE]: "כל השלבים עברו בהצלחה, נשלח ללקוח!",
@@ -61,14 +63,19 @@ export default class Form extends Component {
     const { status } = this.state;
     return (
       <div
-        className={
-          "alert" + status === AppStatus.ERROR
-            ? "alert-danger"
-            : "alert-primary"
-        }
+        className={`
+          status alert ${
+            status === AppStatus.ERROR ? "alert-danger" : "alert-primary"
+          }`}
         role="alert"
       >
         <span>{StatusStrings[status]}</span>
+        <div className="loader-container">
+          {status !== AppStatus.DONE &&
+            status !== AppStatus.ERROR && (
+              <ReactLoading type="bubbles" color="#444" />
+            )}
+        </div>
       </div>
     );
   }
@@ -83,6 +90,7 @@ export default class Form extends Component {
   }
 
   render() {
+    const { status } = this.state;
     return (
       <div className="container welcome text-right mt-1">
         <h1>מערכת הצעות מחיר - עוז תקשורת</h1>
@@ -124,7 +132,9 @@ export default class Form extends Component {
             שגר הצעת מחיר
           </button>
         </form>
-        <div className="mt-3 status">{this.getStatusContainer()}</div>
+        {status !== AppStatus.INIT && (
+          <div className="mt-3">{this.getStatusContainer()}</div>
+        )}
       </div>
     );
   }
