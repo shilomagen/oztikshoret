@@ -26,6 +26,7 @@ app.post('/api/create-offer', async (req, res) => {
     await fs.unlink(filename);
     uziSocket.emitChange(Status.DONE);
   } catch (e) {
+    uziSocket.emitChange(Status.ERROR);
     console.error(e);
   }
 });
