@@ -7,11 +7,9 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const MailService = require('./services/mail/mailService');
 const fs = require('fs');
-const io = require('socket.io')();
 const UziSocket = require('./services/socket/socket');
 const {AppStatus: Status} = require('./../src/common/constants');
 
-const uziSocket = new UziSocket(io);
 const mailService = new MailService();
 
 app.use(bodyParser.json());
@@ -35,8 +33,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 
-const httpServer = app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`App is up and running on port ${PORT}`);
 });
-
-uziSocket.attach(httpServer);
+const uziSocket = new UziSocket(server);
